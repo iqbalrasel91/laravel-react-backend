@@ -17,7 +17,12 @@ class LoginController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 200);
+            return response()->json([
+                'data' => null,
+                'message' => 'validation error',
+                'error' => $validator->errors(),
+                'code' => 422
+            ], 422);
         }
 
         $credentials = request(['email', 'password']);
@@ -32,7 +37,7 @@ class LoginController extends Controller
                 'data' => null,
                 'message' => 'failed',
                 'code' => 422
-            ], 200);
+            ], 422);
         }
 
         return $response;
